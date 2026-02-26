@@ -1,5 +1,6 @@
 import { PublicClientApplication, ConfidentialClientApplication, AuthenticationResult } from '@azure/msal-node';
-import { AuthConfig, AuthMethod } from '../types/index.js';
+import { execSync } from 'child_process';
+import { AuthConfig } from '../types/index.js';
 
 // ============================================================
 // Authentication Provider for Power BI APIs
@@ -7,7 +8,6 @@ import { AuthConfig, AuthMethod } from '../types/index.js';
 // ============================================================
 
 const POWER_BI_SCOPE = 'https://analysis.windows.net/powerbi/api/.default';
-const REDIRECT_URI = 'http://localhost:3000';
 
 export class AuthProvider {
   private pca?: PublicClientApplication;
@@ -85,39 +85,50 @@ export class AuthProvider {
           scopes: [POWER_BI_SCOPE],
           account: accounts[0]
         });
-        return result;
+        if (result) return result;
       } catch {
         // Silent failed, fall through to interactive
       }
     }
 
-    // Interactive popup
+    // Interactive: open browser automatically
     return this.pca.acquireTokenInteractive({
       scopes: [POWER_BI_SCOPE],
-      redirectUri: REDIRECT_URI,
-      prompt: 'select_account'
+      openBrowser: async (url: string) => {
+        process.stderr.write(`[PowerBi MCP AeC] Abrindo browser para autenticação: ${url}\n`);
+        try {
+          execSync(`start "" "${url}"`, { stdio: 'ignore' });
+        } catch {
+          process.stderr.write(`[PowerBi MCP AeC] Abra manualmente: ${url}\n`);
+        }
+      },
+      successTemplate: '<h1>Autenticação concluída! Pode fechar esta janela.</h1>',
+      errorTemplate: '<h1>Erro: {errorCode}</h1>'
     });
   }
 
   private async acquireDeviceCode(): Promise<AuthenticationResult> {
     if (!this.pca) throw new Error('PublicClientApplication não inicializado');
 
-    return this.pca.acquireTokenByDeviceCode({
+    const result = await this.pca.acquireTokenByDeviceCode({
       scopes: [POWER_BI_SCOPE],
       deviceCodeCallback: (response) => {
-        // Log to stderr so MCP server stdio doesn't get polluted
         process.stderr.write(`\n[PowerBi MCP AeC] Para autenticar, acesse:\n${response.verificationUri}\nE insira o código: ${response.userCode}\n\n`);
       }
     });
+    if (!result) throw new Error('Device Code retornou token nulo.');
+    return result;
   }
 
   private async acquireClientCredentials(): Promise<AuthenticationResult> {
     if (!this.cca) throw new Error('ConfidentialClientApplication não inicializado');
     if (!this.config.tenantId) throw new Error('tenantId é obrigatório para Client Credentials');
 
-    return this.cca.acquireTokenByClientCredential({
+    const result = await this.cca.acquireTokenByClientCredential({
       scopes: [POWER_BI_SCOPE]
-    }) as Promise<AuthenticationResult>;
+    });
+    if (!result) throw new Error('Client Credentials retornou token nulo. Verifique clientId/clientSecret/tenantId.');
+    return result;
   }
 
   clearCache(): void {

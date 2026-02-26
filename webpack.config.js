@@ -20,7 +20,8 @@ const config = [
       keytar: 'commonjs keytar'
     },
     resolve: {
-      extensions: ['.ts', '.js']
+      extensions: ['.ts', '.js'],
+      extensionAlias: { '.js': ['.ts', '.js'] }
     },
     module: {
       rules: [
@@ -48,7 +49,8 @@ const config = [
       keytar: 'commonjs keytar'
     },
     resolve: {
-      extensions: ['.ts', '.js']
+      extensions: ['.ts', '.js'],
+      extensionAlias: { '.js': ['.ts', '.js'] }
     },
     module: {
       rules: [

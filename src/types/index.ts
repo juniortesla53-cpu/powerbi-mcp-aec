@@ -158,3 +158,36 @@ export interface StatusUpdatePayload {
   totalToolsCount: number;
   error?: string;
 }
+
+// ---- Chat Types ----
+
+export type ChatProviderType = 'copilot' | 'gemini' | 'groq';
+
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface ChatWebViewMessage {
+  type:
+    | 'chat:send'
+    | 'chat:cancel'
+    | 'chat:getConfig'
+    | 'chat:setApiKey'
+    | 'chat:deleteApiKey'
+    | 'chat:chunk'
+    | 'chat:done'
+    | 'chat:error'
+    | 'chat:configLoaded'
+    | 'chat:apiKeySet';
+  provider?: ChatProviderType;
+  text?: string;
+  history?: ChatMessage[];
+  key?: string;
+  done?: boolean;
+  error?: string;
+  copilotAvailable?: boolean;
+  geminiKeySet?: boolean;
+  groqKeySet?: boolean;
+  success?: boolean;
+}

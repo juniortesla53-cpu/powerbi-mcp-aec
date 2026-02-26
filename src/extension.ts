@@ -5,6 +5,7 @@ import * as cp from 'child_process';
 import { ServerConfig, ServerStatus, ToolsState } from './types/index.js';
 import { ALL_TOOLS, getDefaultToolsState } from './config/toolConfig.js';
 import { ConfigWebViewProvider } from './providers/configWebViewProvider.js';
+import { ChatWebViewProvider } from './providers/chatWebViewProvider.js';
 
 // ============================================================
 // PowerBi MCP Server AeC - VS Code Extension Entry Point
@@ -37,6 +38,12 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.registerWebviewViewProvider('powerbiMcpAec.configView', configProvider)
   );
 
+  // Register Chat WebView provider
+  const chatProvider = new ChatWebViewProvider(context.extensionUri, context);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider('powerbiMcpAec.chatView', chatProvider)
+  );
+
   // Register commands
   context.subscriptions.push(
     vscode.commands.registerCommand('powerbiMcpAec.openConfig', () => {
@@ -66,6 +73,34 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.commands.executeCommand('powerbiMcpAec.openConfig');
         }
       });
+    }),
+
+    vscode.commands.registerCommand('powerbiMcpAec.openChat', () => {
+      vscode.commands.executeCommand('powerbiMcpAec.chatView.focus');
+    }),
+
+    vscode.commands.registerCommand('powerbiMcpAec.setGeminiKey', async () => {
+      const key = await vscode.window.showInputBox({
+        prompt: 'Cole sua chave da API Gemini (gratuita em aistudio.google.com)',
+        password: true,
+        placeHolder: 'AIza...'
+      });
+      if (key) {
+        await context.secrets.store('powerbiMcpAec.geminiApiKey', key);
+        vscode.window.showInformationMessage('Chave Gemini salva com segurança.');
+      }
+    }),
+
+    vscode.commands.registerCommand('powerbiMcpAec.setGroqKey', async () => {
+      const key = await vscode.window.showInputBox({
+        prompt: 'Cole sua chave da API Groq (gratuita em console.groq.com)',
+        password: true,
+        placeHolder: 'gsk_...'
+      });
+      if (key) {
+        await context.secrets.store('powerbiMcpAec.groqApiKey', key);
+        vscode.window.showInformationMessage('Chave Groq salva com segurança.');
+      }
     })
   );
 

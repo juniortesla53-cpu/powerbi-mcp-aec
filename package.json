@@ -201,6 +201,19 @@
       {
         "command": "powerbiMcpAec.showStatus",
         "title": "PowerBi MCP AeC: Ver Status"
+      },
+      {
+        "command": "powerbiMcpAec.openChat",
+        "title": "PowerBi MCP AeC: Abrir Chat IA",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "powerbiMcpAec.setGeminiKey",
+        "title": "PowerBi MCP AeC: Configurar Chave API Gemini"
+      },
+      {
+        "command": "powerbiMcpAec.setGroqKey",
+        "title": "PowerBi MCP AeC: Configurar Chave API Groq"
       }
     ],
     "viewsContainers": {
@@ -218,6 +231,11 @@
           "type": "webview",
           "id": "powerbiMcpAec.configView",
           "name": "Configurações"
+        },
+        {
+          "type": "webview",
+          "id": "powerbiMcpAec.chatView",
+          "name": "Chat IA"
         }
       ]
     },
@@ -227,7 +245,10 @@
         { "command": "powerbiMcpAec.startServer" },
         { "command": "powerbiMcpAec.stopServer" },
         { "command": "powerbiMcpAec.restartServer" },
-        { "command": "powerbiMcpAec.clearToken" }
+        { "command": "powerbiMcpAec.clearToken" },
+        { "command": "powerbiMcpAec.openChat" },
+        { "command": "powerbiMcpAec.setGeminiKey" },
+        { "command": "powerbiMcpAec.setGroqKey" }
       ]
     }
   },

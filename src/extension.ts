@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(statusBarItem);
 
   // Register WebView provider for sidebar
-  configProvider = new ConfigWebViewProvider(context.extensionUri, context);
+  configProvider = new ConfigWebViewProvider(context.extensionUri, context, () => serverStatus);
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider('powerbiMcpAec.configView', configProvider)
   );
@@ -265,6 +265,7 @@ function registerMcpServerInSettings(context: vscode.ExtensionContext) {
 
 function updateStatusBar(status: ServerStatus) {
   serverStatus = status;
+  configProvider?.postStatusUpdate(status);
   const icons: Record<ServerStatus, string> = {
     stopped: '$(circle-slash)',
     starting: '$(sync~spin)',

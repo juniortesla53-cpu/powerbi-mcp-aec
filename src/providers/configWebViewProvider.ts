@@ -15,7 +15,8 @@ export class ConfigWebViewProvider implements vscode.WebviewViewProvider {
 
   constructor(
     private readonly extensionUri: vscode.Uri,
-    private readonly context: vscode.ExtensionContext
+    private readonly context: vscode.ExtensionContext,
+    private readonly _getServerStatus: () => string = () => 'stopped'
   ) {}
 
   resolveWebviewView(
@@ -48,6 +49,12 @@ export class ConfigWebViewProvider implements vscode.WebviewViewProvider {
     }
   }
 
+  postStatusUpdate(serverStatus: string) {
+    if (this._view) {
+      this._view.webview.postMessage({ type: 'statusUpdate', payload: { serverStatus } });
+    }
+  }
+
   private _handleMessage(message: WebViewMessage, webview: vscode.Webview) {
     const vsConfig = vscode.workspace.getConfiguration('powerbiMcpAec');
 
@@ -69,6 +76,7 @@ export class ConfigWebViewProvider implements vscode.WebviewViewProvider {
         configData['profiles'] = PERMISSION_PROFILES.map(p => ({ name: p.name, description: p.description }));
 
         webview.postMessage({ type: 'configUpdated', payload: configData });
+        webview.postMessage({ type: 'statusUpdate', payload: { serverStatus: this._getServerStatus() } });
         break;
       }
 

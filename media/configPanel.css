@@ -1,0 +1,407 @@
+/* ====================================================
+   PowerBi MCP Server AeC - Configuration Panel Styles
+   Uses VS Code CSS variables for automatic theme support
+   ==================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-foreground);
+  background: var(--vscode-sideBar-background);
+  padding: 0;
+  line-height: 1.5;
+}
+
+#app {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---- Header ---- */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  background: var(--vscode-sideBarSectionHeader-background);
+  border-bottom: 1px solid var(--vscode-sideBarSectionHeader-border);
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.logo {
+  font-size: 16px;
+}
+
+/* ---- Status Badge ---- */
+
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+}
+
+.badge-stopped {
+  color: var(--vscode-statusBarItem-warningForeground, #fff);
+  background: var(--vscode-statusBarItem-warningBackground, #6c6c00);
+}
+
+.badge-starting {
+  color: var(--vscode-foreground);
+  background: var(--vscode-progressBar-background, #0e70c0);
+}
+
+.badge-running {
+  color: #fff;
+  background: #16825d;
+}
+
+.badge-error {
+  color: #fff;
+  background: var(--vscode-statusBarItem-errorBackground, #c72e0f);
+}
+
+/* ---- Sections ---- */
+
+.section {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--vscode-sideBarSectionHeader-border, #454545);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--vscode-sideBarSectionHeader-foreground, var(--vscode-foreground));
+  padding: 6px 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---- Buttons ---- */
+
+.controls-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.btn {
+  padding: 5px 10px;
+  border: 1px solid var(--vscode-button-border, transparent);
+  border-radius: 3px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--vscode-font-family);
+  transition: opacity 0.1s;
+}
+
+.btn:active {
+  opacity: 0.8;
+}
+
+.btn-primary {
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+}
+
+.btn-primary:hover {
+  background: var(--vscode-button-hoverBackground);
+}
+
+.btn-secondary {
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.btn-secondary:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+.btn-full {
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* ---- Checkboxes ---- */
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.checkbox-row input[type="checkbox"] {
+  accent-color: var(--vscode-focusBorder);
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.danger-label {
+  color: var(--vscode-errorForeground, #f48771);
+}
+
+/* ---- Profiles ---- */
+
+.profiles-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-btn {
+  background: var(--vscode-button-secondaryBackground, #3a3d41);
+  color: var(--vscode-button-secondaryForeground, #cccccc);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 8px 10px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--vscode-font-family);
+  font-size: 12px;
+  transition: border-color 0.1s;
+}
+
+.profile-btn:hover {
+  border-color: var(--vscode-focusBorder);
+}
+
+.profile-btn .profile-name {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.profile-btn .profile-desc {
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+/* ---- Category Headers ---- */
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+  padding: 8px 0 4px 0;
+  opacity: 0.8;
+}
+
+.toggle-all-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--vscode-textLink-foreground, #3794ff);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--vscode-font-family);
+}
+
+.toggle-all-btn:hover {
+  text-decoration: underline;
+}
+
+/* ---- Tools List ---- */
+
+.tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.tool-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: background 0.1s;
+}
+
+.tool-item:hover {
+  background: var(--vscode-list-hoverBackground);
+}
+
+.tool-item.disabled {
+  opacity: 0.5;
+}
+
+.tool-switch {
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tool-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.switch-slider {
+  display: block;
+  width: 30px;
+  height: 16px;
+  background: var(--vscode-input-border, #6b6b6b);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.switch-slider::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.tool-switch input:checked + .switch-slider {
+  background: var(--vscode-button-background, #0e70c0);
+}
+
+.tool-switch input:checked + .switch-slider::before {
+  transform: translateX(14px);
+}
+
+.tool-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tool-name {
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tool-desc {
+  font-size: 11px;
+  opacity: 0.65;
+  margin-top: 1px;
+  line-height: 1.3;
+}
+
+.badge-destructive {
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(244, 135, 113, 0.2);
+  color: var(--vscode-errorForeground, #f48771);
+  font-weight: 600;
+}
+
+.badge-advanced {
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(55, 148, 255, 0.15);
+  color: var(--vscode-textLink-foreground, #3794ff);
+  font-weight: 600;
+}
+
+/* ---- Count Badge ---- */
+
+.count-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--vscode-badge-background);
+  color: var(--vscode-badge-foreground);
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ---- Forms ---- */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--vscode-input-foreground);
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group select,
+.form-group textarea {
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, #6b6b6b);
+  border-radius: 3px;
+  padding: 5px 8px;
+  font-family: var(--vscode-font-family);
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.1s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--vscode-focusBorder);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 54px;
+  font-family: var(--vscode-editor-font-family, monospace);
+}
+
+.hint {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 2px;
+}

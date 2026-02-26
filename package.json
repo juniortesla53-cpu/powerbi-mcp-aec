@@ -1,0 +1,262 @@
+{
+  "name": "powerbi-mcp-aec",
+  "displayName": "PowerBi MCP Server AeC",
+  "description": "Power BI MCP Server para AeC - Inclui gerenciamento de ferramentas, permissões e configurações simplificadas",
+  "version": "1.0.0",
+  "publisher": "AeC",
+  "icon": "resources/icons/icon.png",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "AI",
+    "Data Science",
+    "Other"
+  ],
+  "keywords": [
+    "powerbi",
+    "mcp",
+    "model context protocol",
+    "dax",
+    "semantic model",
+    "aec"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "PowerBi MCP Server AeC",
+      "properties": {
+        "powerbiMcpAec.auth.tenantId": {
+          "type": "string",
+          "default": "",
+          "description": "Azure Tenant ID para autenticação no Power BI"
+        },
+        "powerbiMcpAec.auth.clientId": {
+          "type": "string",
+          "default": "ea0616ba-638b-4df5-95b9-636659ae5121",
+          "description": "Client ID do aplicativo Azure AD (padrão: Power BI Desktop)"
+        },
+        "powerbiMcpAec.auth.method": {
+          "type": "string",
+          "enum": ["interactive", "deviceCode", "clientCredentials"],
+          "enumDescriptions": [
+            "Autenticação interativa via browser",
+            "Autenticação via código de dispositivo",
+            "Credenciais de cliente (Service Principal)"
+          ],
+          "default": "interactive",
+          "description": "Método de autenticação"
+        },
+        "powerbiMcpAec.auth.clientSecret": {
+          "type": "string",
+          "default": "",
+          "description": "Client Secret (somente para autenticação via Service Principal)"
+        },
+        "powerbiMcpAec.connection.defaultSemanticModelIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "IDs dos modelos semânticos usados frequentemente"
+        },
+        "powerbiMcpAec.connection.xmlaEndpoint": {
+          "type": "string",
+          "default": "",
+          "description": "Endpoint XMLA para operações de modelagem (ex: powerbi://api.powerbi.com/v1.0/myorg/WorkspaceName)"
+        },
+        "powerbiMcpAec.tools.remote.getSemanticModelSchema": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Obter esquema do modelo semântico"
+        },
+        "powerbiMcpAec.tools.remote.generateQuery": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Gerar consulta DAX a partir de linguagem natural"
+        },
+        "powerbiMcpAec.tools.remote.executeQuery": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Executar consulta DAX"
+        },
+        "powerbiMcpAec.tools.modeling.connectionOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações de conexão ao modelo"
+        },
+        "powerbiMcpAec.tools.modeling.databaseOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações de banco de dados (listar, criar, deletar)"
+        },
+        "powerbiMcpAec.tools.modeling.tableOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações em tabelas"
+        },
+        "powerbiMcpAec.tools.modeling.columnOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações em colunas"
+        },
+        "powerbiMcpAec.tools.modeling.measureOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações em medidas DAX"
+        },
+        "powerbiMcpAec.tools.modeling.relationshipOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações em relacionamentos"
+        },
+        "powerbiMcpAec.tools.modeling.partitionOperations": {
+          "type": "boolean",
+          "default": false,
+          "description": "Habilita: Operações em partições (avançado)"
+        },
+        "powerbiMcpAec.tools.modeling.calculationGroupOperations": {
+          "type": "boolean",
+          "default": false,
+          "description": "Habilita: Operações em grupos de cálculo"
+        },
+        "powerbiMcpAec.tools.modeling.daxQueryOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações DAX (validar, executar, otimizar)"
+        },
+        "powerbiMcpAec.tools.modeling.securityRoleOperations": {
+          "type": "boolean",
+          "default": false,
+          "description": "Habilita: Operações em funções de segurança (RLS)"
+        },
+        "powerbiMcpAec.tools.modeling.perspectiveOperations": {
+          "type": "boolean",
+          "default": false,
+          "description": "Habilita: Operações em perspectivas"
+        },
+        "powerbiMcpAec.tools.modeling.transactionOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Controle de transações no modelo"
+        },
+        "powerbiMcpAec.tools.modeling.traceOperations": {
+          "type": "boolean",
+          "default": false,
+          "description": "Habilita: Rastreamento e monitoramento de análise (avançado)"
+        },
+        "powerbiMcpAec.tools.modeling.cultureOperations": {
+          "type": "boolean",
+          "default": false,
+          "description": "Habilita: Operações de cultura e localização"
+        },
+        "powerbiMcpAec.tools.modeling.bulkOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Operações em massa (renomear, documentar centenas de objetos)"
+        },
+        "powerbiMcpAec.server.readOnly": {
+          "type": "boolean",
+          "default": false,
+          "description": "Modo somente leitura: bloqueia qualquer modificação no modelo"
+        },
+        "powerbiMcpAec.server.requireConfirmation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Solicitar confirmação antes de operações destrutivas"
+        },
+        "powerbiMcpAec.server.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Iniciar servidor MCP automaticamente ao abrir o VS Code"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "powerbiMcpAec.openConfig",
+        "title": "PowerBi MCP AeC: Abrir Configurações",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "powerbiMcpAec.startServer",
+        "title": "PowerBi MCP AeC: Iniciar Servidor",
+        "icon": "$(play)"
+      },
+      {
+        "command": "powerbiMcpAec.stopServer",
+        "title": "PowerBi MCP AeC: Parar Servidor",
+        "icon": "$(stop)"
+      },
+      {
+        "command": "powerbiMcpAec.restartServer",
+        "title": "PowerBi MCP AeC: Reiniciar Servidor",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "powerbiMcpAec.clearToken",
+        "title": "PowerBi MCP AeC: Limpar Token de Autenticação"
+      },
+      {
+        "command": "powerbiMcpAec.showStatus",
+        "title": "PowerBi MCP AeC: Ver Status"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "powerbiMcpAec",
+          "title": "PowerBi MCP AeC",
+          "icon": "resources/icons/powerbi.svg"
+        }
+      ]
+    },
+    "views": {
+      "powerbiMcpAec": [
+        {
+          "type": "webview",
+          "id": "powerbiMcpAec.configView",
+          "name": "Configurações"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        { "command": "powerbiMcpAec.openConfig" },
+        { "command": "powerbiMcpAec.startServer" },
+        { "command": "powerbiMcpAec.stopServer" },
+        { "command": "powerbiMcpAec.restartServer" },
+        { "command": "powerbiMcpAec.clearToken" }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "pretest": "npm run compile-tests && npm run compile",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.96.0",
+    "@typescript-eslint/eslint-plugin": "^8.x",
+    "@typescript-eslint/parser": "^8.x",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.x",
+    "ts-loader": "^9.x",
+    "typescript": "^5.x",
+    "webpack": "^5.x",
+    "webpack-cli": "^5.x"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.x",
+    "@azure/msal-node": "^2.x",
+    "@modelcontextprotocol/sdk": "^1.x",
+    "axios": "^1.x",
+    "keytar": "^7.x"
+  }
+}

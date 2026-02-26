@@ -7,6 +7,9 @@ import * as getSemanticModelSchema from './remote/getSemanticModelSchema.js';
 import * as generateQuery from './remote/generateQuery.js';
 import * as executeQuery from './remote/executeQuery.js';
 
+// Local Power BI Desktop tools
+import * as localPbiOperations from './local/localPbiOperations.js';
+
 // Modeling tools
 import * as connectionOperations from './modeling/connectionOperations.js';
 import * as databaseOperations from './modeling/databaseOperations.js';
@@ -34,6 +37,10 @@ interface ToolEntry {
 }
 
 const TOOL_REGISTRY: Record<string, ToolEntry> = {
+  local_pbi_operations: {
+    definition: localPbiOperations.definition,
+    handler: localPbiOperations.handler as ToolHandler
+  },
   get_semantic_model_schema: {
     definition: getSemanticModelSchema.definition,
     handler: getSemanticModelSchema.handler as ToolHandler

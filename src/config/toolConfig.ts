@@ -5,6 +5,18 @@ import { ToolInfo, ToolsState, ServerConfig, AuthConfig, ConnectionConfig } from
 // ============================================================
 
 export const ALL_TOOLS: ToolInfo[] = [
+  // ---- Local Power BI Desktop Tools ----
+  {
+    id: 'local_pbi_operations',
+    configKey: 'tools.local.localPbiOperations',
+    name: 'Power BI Desktop Local',
+    description: 'Detecta e interage com o Power BI Desktop aberto localmente: esquema, tabelas e DAX sem autenticação',
+    category: 'modeling',
+    defaultEnabled: true,
+    isDestructive: false,
+    isAdvanced: false
+  },
+
   // ---- Remote MCP Tools ----
   {
     id: 'get_semantic_model_schema',

@@ -66,6 +66,11 @@
           "default": "",
           "description": "Endpoint XMLA para operações de modelagem (ex: powerbi://api.powerbi.com/v1.0/myorg/WorkspaceName)"
         },
+        "powerbiMcpAec.tools.local.localPbiOperations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Habilita: Power BI Desktop Local (detectar e consultar modelos abertos localmente sem autenticação)"
+        },
         "powerbiMcpAec.tools.remote.getSemanticModelSchema": {
           "type": "boolean",
           "default": true,
